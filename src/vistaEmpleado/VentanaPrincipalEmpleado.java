@@ -16,7 +16,7 @@ import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-public class VentanaPrincipal extends JFrame {
+public class VentanaPrincipalEmpleado extends JFrame {
 
 	private JPanel contentPane;
 	//Boton
@@ -33,7 +33,7 @@ public class VentanaPrincipal extends JFrame {
 		this.documentoUsuario.setText(""); 
 		
 	}
-	public VentanaPrincipal() {
+	public VentanaPrincipalEmpleado() {
 		setTitle("EMPLEADO");
 		setBackground(new Color(255, 250, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
