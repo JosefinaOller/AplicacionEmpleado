@@ -20,7 +20,7 @@ import vistaEmpleado.VentanaPrincipal;
  * <br>
  *Clase que representa el controlador que cumple su función de controlar y gestionar datos al modelo
  */
-public class Controlador implements ActionListener,Runnable{
+public class Controlador implements ActionListener{
 
 	protected Sistema sistema;
 	private  VentanaPrincipal vistaPrincipal;
@@ -41,40 +41,50 @@ public class Controlador implements ActionListener,Runnable{
 		if(comando.equalsIgnoreCase("Siguiente usuario")) {
 			this.vistaPrincipal.limpiarDNI();
 			try {
-				
-				Socket socket = new Socket(InetAddress.getLocalHost().getHostAddress(),asignarPuerto()); 
-				PrintWriter out = new PrintWriter(socket.getOutputStream(), true); 
-		        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
-		        out.println(sistema.getEmpleado().getBox()); //le mando el box
-		        
-		        String documento = in.readLine();
-	            
-	            if(Integer.parseInt(documento)==0) { //no hay clientes esperando
-	            	JOptionPane.showMessageDialog(null,"No hay cliente esperando", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-	            }
-	            else { //muestro en la vista de empleado
-	            	setDocumentoUsuario(documento);
-	            	
-	            }
-	            socket.close();
-	            out.close();
-	            in.close();
-
-		        
-			} catch (UnknownHostException e1) {
-	        	JOptionPane.showMessageDialog(null,"ERROR COMUNICACION 2.EMPLEADO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-
-				//e1.printStackTrace();
+				comunicacionEmpleado(asignarPuerto()); //uso el puerto original
 			} catch (IOException e1) {
-	        	JOptionPane.showMessageDialog(null,"ERROR COMUNICACION 3.EMPLEADO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-
-				//e1.printStackTrace();
-			}
-			
+				try {
+					comunicacionEmpleado(asignarPuerto()+200); //uso otro puerto
+				} catch (IOException e2) {
+					JOptionPane.showMessageDialog(null,"ERROR, NO SE PUDO CONECTAR EN NINGUN PUERTO DE EMPLEADO, POR FAVOR INTENTA DE NUEVO", "ERROR", JOptionPane.WARNING_MESSAGE);
+				} 
+			}	
 		}		
 	
 		
 	}
+
+	private void comunicacionEmpleado(int puerto) throws UnknownHostException, IOException {
+		try {	
+			Socket socket = new Socket(InetAddress.getLocalHost().getHostAddress(),asignarPuerto()); 
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true); 
+	        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
+	        out.println(sistema.getEmpleado().getBox()); //le mando el box
+	        
+	        String documento = in.readLine();
+            
+            if(Integer.parseInt(documento)==0) { //no hay clientes esperando
+            	JOptionPane.showMessageDialog(null,"No hay cliente esperando", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+            else { //muestro en la vista de empleado
+            	setDocumentoUsuario(documento);
+            	
+            }
+            socket.close();
+            out.close();
+            in.close();
+
+	        
+		} catch (UnknownHostException e1) {
+        	//JOptionPane.showMessageDialog(null,"ERROR COMUNICACION 2.EMPLEADO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        	e1.printStackTrace();
+		} catch (IOException e1) {
+        	//JOptionPane.showMessageDialog(null,"ERROR COMUNICACION 3.EMPLEADO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+			e1.printStackTrace();
+		}
+		
+	}
+
 
 	private int asignarPuerto() {
 		return sistema.getEmpleado().getPuerto();
@@ -88,12 +98,4 @@ public class Controlador implements ActionListener,Runnable{
 			Controlador c= new Controlador();
 		
 	}
-
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }
