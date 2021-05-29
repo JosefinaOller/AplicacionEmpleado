@@ -1,25 +1,22 @@
-package vista;
+package vistaEmpleado;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import java.awt.GridLayout;
-import javax.swing.JButton;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
+import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
-public class ventanaPrincipal extends JFrame {
+public class VentanaPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	//Boton
@@ -31,30 +28,12 @@ public class ventanaPrincipal extends JFrame {
 	private JTextPane documentoUsuario;
 	private JTextPane boxEmpleado;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ventanaPrincipal frame = new ventanaPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	
 	public void limpiarDNI() {
 		this.documentoUsuario.setText(""); 
 		
 	}
-	public ventanaPrincipal() {
+	public VentanaPrincipal() {
 		setTitle("EMPLEADO");
 		setBackground(new Color(255, 250, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,13 +96,6 @@ public class ventanaPrincipal extends JFrame {
 		siguienteUsuario.setFont(new Font("Microsoft YaHei UI Light", Font.PLAIN, 20));
 		this.siguienteUsuario.setActionCommand("Siguiente usuario");
 		
-		JPanel panel_9 = new JPanel();
-		panel_3.add(panel_9);
-		
-		siguienteDocumento = new JButton("       VER       ");
-		siguienteDocumento.setFont(new Font("Microsoft JhengHei UI Light", Font.PLAIN, 20));
-		panel_9.add(siguienteDocumento);
-		this.siguienteDocumento.setActionCommand("Siguiente documento");
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "DOCUMENTO DEL CLIENTE", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -144,7 +116,7 @@ public class ventanaPrincipal extends JFrame {
 	
 	public void setActionlistener(ActionListener actionlistener) {
 		this.siguienteUsuario.addActionListener(actionlistener);
-		this.siguienteDocumento.addActionListener(actionlistener);
+
 		this.actionlistener = actionlistener;
 	}
 	
@@ -158,3 +130,4 @@ public class ventanaPrincipal extends JFrame {
 	}
 
 }
+

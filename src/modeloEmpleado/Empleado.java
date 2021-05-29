@@ -1,6 +1,5 @@
-package modelo;
+package modeloEmpleado;
 
-import java.util.ArrayList;
 
 public class Empleado {
 
@@ -32,14 +31,8 @@ public class Empleado {
 		return puerto;
 	}
 
-
-
 	public void setPuerto(int puerto) {
 		this.puerto = puerto;
 	}
-
-	
-	
-	
 
 }
