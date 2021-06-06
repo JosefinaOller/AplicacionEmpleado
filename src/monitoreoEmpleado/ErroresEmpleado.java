@@ -11,9 +11,11 @@ import controladorEmpleado.ControladorEmpleado;
 public class ErroresEmpleado {
 	
 	private ControladorEmpleado controladorEmpleado;
+	private int puerto;
 	
 	public ErroresEmpleado(ControladorEmpleado controladorEmpleado) {
 		this.controladorEmpleado = controladorEmpleado;
+		this.setPuerto(controladorEmpleado.sistema.getEmpleado().getBox());
 		recibirError();
 	}
 
@@ -21,7 +23,7 @@ public class ErroresEmpleado {
 		new Thread() {
             public void run() {
                 try {
-                    ServerSocket server = new ServerSocket(2030); //serverSocket de empleado desde el monitor
+                    ServerSocket server = new ServerSocket(puerto); //serverSocket de empleado desde el monitor
                     while (true) {
 
                         Socket socket= server.accept();
@@ -49,6 +51,24 @@ public class ErroresEmpleado {
 		this.controladorEmpleado.cambiarServidor();
 		
 	}
+
+	public ControladorEmpleado getControladorEmpleado() {
+		return controladorEmpleado;
+	}
+
+	public void setControladorEmpleado(ControladorEmpleado controladorEmpleado) {
+		this.controladorEmpleado = controladorEmpleado;
+	}
+
+	public int getPuerto() {
+		return puerto;
+	}
+
+	public void setPuerto(int puerto) {
+		this.puerto = puerto+2030;
+	}
+	
+	
 
 	
 	

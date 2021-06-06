@@ -9,9 +9,12 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import modeloEmpleado.Empleado;
 import modeloEmpleado.Sistema;
+
 import vistaEmpleado.VentanaPrincipalEmpleado;
 
 
@@ -22,8 +25,9 @@ import vistaEmpleado.VentanaPrincipalEmpleado;
  */
 public class ControladorEmpleado implements ActionListener{
 
-	protected Sistema sistema;
+	public Sistema sistema;
 	private  VentanaPrincipalEmpleado vistaPrincipal;
+	private int cambio=0;
 	
 	public ControladorEmpleado() {
 		this.vistaPrincipal = new VentanaPrincipalEmpleado();
@@ -33,6 +37,7 @@ public class ControladorEmpleado implements ActionListener{
 		String box = JOptionPane.showInputDialog("Escribe tu box");
 		sistema.setEmpleado(new Empleado(Integer.parseInt(box)));
 		this.vistaPrincipal.setBox(box);
+		
 	}
 
 	
@@ -47,12 +52,11 @@ public class ControladorEmpleado implements ActionListener{
 		        out.println(sistema.getEmpleado().getBox()); //le mando el box
 		        
 		        String documento = in.readLine();
-	            
 	            if(Integer.parseInt(documento)==0) { //no hay clientes esperando
 	            	JOptionPane.showMessageDialog(null,"No hay cliente esperando", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
 	            }
 	            else { //muestro en la vista de empleado
-	            	setDocumentoUsuario(documento);
+	            		setDocumentoUsuario(documento);
 	            	
 	            }
 	            socket.close();
@@ -83,7 +87,13 @@ public class ControladorEmpleado implements ActionListener{
 	}
 
 	public void cambiarServidor() {
-		this.sistema.getEmpleado().setPuerto(asignarPuerto() + 200);
+		if(cambio==0) {
+			System.out.println("Empleado cambiando de puerto...");
+			this.sistema.getEmpleado().setPuerto(asignarPuerto()+200);
+			System.out.println(sistema.getEmpleado().getPuerto());
+			cambio=1;
+		}
+		
 		
 	}
 }
